@@ -24,8 +24,8 @@ admin-kit/
   components/ui/*                  → primitives (pure; only use admin-* tokens + cn)
                                      button, card, table, badge, input, select,
                                      textarea, checkbox (with indeterminate),
-                                     switch, modal, confirm-dialog, label,
-                                     money-input, confetti
+                                     switch, segmented, modal, confirm-dialog,
+                                     label, money-input, confetti
   components/admin/*               → building blocks + the generic shell
       admin-context.tsx           → <AdminProvider> + useAdminKit() + nav types
       admin-shell.tsx             → <AdminShell> (sidebar + topbar + gated page body)

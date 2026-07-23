@@ -5,6 +5,11 @@ import {
   Layers,
   ShoppingCart,
   ClipboardList,
+  CreditCard,
+  Truck,
+  Megaphone,
+  Ticket,
+  QrCode,
   Users,
   SlidersHorizontal,
   Settings,
@@ -31,7 +36,23 @@ export const nav: NavEntry[] = [
       { title: "Categories", href: "/demo/categories", icon: Layers },
     ],
   },
-  { title: "Orders", href: "/demo/orders", icon: ClipboardList },
+  {
+    title: "Sales",
+    icon: ShoppingCart,
+    children: [
+      { title: "Orders", href: "/demo/orders", icon: ClipboardList },
+      { title: "Payments", href: "/demo/payments", icon: CreditCard },
+      { title: "Logistics", href: "/demo/logistics", icon: Truck },
+    ],
+  },
+  {
+    title: "Marketing",
+    icon: Megaphone,
+    children: [
+      { title: "Vouchers", href: "/demo/vouchers", icon: Ticket },
+      { title: "Campaigns", href: "/demo/campaigns", icon: QrCode },
+    ],
+  },
   { title: "Customers", href: "/demo/customers", icon: Users },
   {
     title: "System",

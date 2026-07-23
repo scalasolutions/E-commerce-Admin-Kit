@@ -89,10 +89,56 @@ export default function GalleryPage() {
           </Link>
           <h1 className="mt-4 text-3xl font-bold tracking-tight">Component gallery</h1>
           <p className="mt-1 text-sm text-admin-text-subdued">
-            Every primitive and building block, in its common states.
+            Every primitive and building block, in its common states — plus full
+            reference pages (list + detail/edit) built from them.
           </p>
 
           <div className="mt-10 space-y-12">
+            <Section id="pages" title="Reference pages — list · detail/edit">
+              <div className="grid gap-3 sm:grid-cols-2">
+                {[
+                  { name: "Products", list: "/demo/products", edit: "/demo/products/p-001", create: "/demo/products/new" },
+                  { name: "Vouchers", list: "/demo/vouchers", edit: "/demo/vouchers/v-001", create: "/demo/vouchers/new" },
+                  { name: "Orders", list: "/demo/orders", edit: "/demo/orders/o-1042", create: null },
+                  { name: "Payments", list: "/demo/payments", edit: null, create: null },
+                  { name: "Logistics", list: "/demo/logistics", edit: null, create: null },
+                  { name: "Campaigns", list: "/demo/campaigns", edit: "/demo/campaigns/c-001", create: "/demo/campaigns/new" },
+                ].map((f) => (
+                  <div
+                    key={f.name}
+                    className="flex items-center justify-between gap-3 rounded-lg border border-admin-border bg-admin-surface px-4 py-3 shadow-admin"
+                  >
+                    <span className="font-medium text-admin-text">{f.name}</span>
+                    <span className="flex items-center gap-2 text-xs font-semibold">
+                      <Link href={f.list} className="text-admin-accent hover:underline">
+                        List
+                      </Link>
+                      {f.edit && (
+                        <>
+                          <span className="text-admin-text-disabled">·</span>
+                          <Link href={f.edit} className="text-admin-accent hover:underline">
+                            {f.name === "Orders" ? "Detail" : "Edit"}
+                          </Link>
+                        </>
+                      )}
+                      {f.create && (
+                        <>
+                          <span className="text-admin-text-disabled">·</span>
+                          <Link href={f.create} className="text-admin-accent hover:underline">
+                            New
+                          </Link>
+                        </>
+                      )}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-3 text-xs text-admin-text-subdued">
+                Detail/edit pages open inside the full admin shell. The voucher &amp; campaign
+                editors use a live-preview layout; open any table row to reach a record.
+              </p>
+            </Section>
+
             <Section id="buttons" title="Buttons">
               <div className="space-y-4">
                 <Row>

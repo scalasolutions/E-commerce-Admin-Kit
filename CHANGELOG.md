@@ -2,6 +2,23 @@
 
 ## Unreleased
 
+### Reference flows in the showcase (fake-data pages built from the kit)
+Full list + detail/edit pages so you can judge real UX, not just isolated components:
+- **Vouchers** — list + a redesigned **live-preview edit page** (sticky coupon
+  card that updates as you type; segmented discount-type control).
+- **Campaigns** — list + two-column edit with a live tracked-link / QR preview.
+- **Orders** — list (stat cards + filters) + a full order detail (customer,
+  items + totals, payment + transactions, fulfillment, notes).
+- **Payments** — list with status stat cards, method/reference table, and a
+  webhook-events panel.
+- **Logistics** — a stage-tab fulfillment queue with a guided courier-booking
+  flow (rate selection) and a printable shipping-label preview.
+- New **`Segmented`** control primitive (pill toggle group) used by the editors.
+- Nav grouped into Sales (Orders/Payments/Logistics) and Marketing
+  (Vouchers/Campaigns); the gallery gained a Reference-pages index.
+
+
+
 ### Reusable table patterns (extracted from Francis's list pages, not the pages themselves)
 - `useRowSelection` hook — select-all-on-page, toggle, indeterminate, clear.
 - `Checkbox` now supports `indeterminate` (dash state) for select-all headers.
