@@ -1,0 +1,52 @@
+/* =========================================================================
+   Admin Kit theme — import once in your app/globals.css:
+       @import "../admin-kit/styles/admin-theme.css";
+   (adjust the relative path to where you drop the kit)
+
+   RE-THEME PER CLIENT: change the three --admin-accent* values below.
+   That's the whole brand swap — buttons, focus rings, active nav, avatar,
+   and links all follow.
+   ========================================================================= */
+:root {
+  --admin-accent: #1b61a7;
+  --admin-accent-hover: #154e86;
+  --admin-accent-subdued: #e8f1fa;
+}
+
+/* Motion utilities — scoped under .admin-shell so nothing leaks elsewhere. */
+
+/* Page mount: gentle fade + slide up (applied to the keyed page wrapper). */
+@keyframes admin-fade-in-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.admin-shell .admin-fade-in-up {
+  animation: admin-fade-in-up 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Hover lift for cards / stat tiles. */
+.admin-shell .admin-hover-lift {
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+}
+.admin-shell .admin-hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
+}
+
+/* Skeleton shimmer for loading rows / blocks. */
+@keyframes admin-skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.55; }
+}
+.admin-shell .admin-skeleton {
+  background-color: #f1f1f1;
+  border-radius: 0.5rem;
+  animation: admin-skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-shell .admin-fade-in-up { animation: none; }
+  .admin-shell .admin-hover-lift { transition: box-shadow 150ms ease, border-color 150ms ease; }
+  .admin-shell .admin-hover-lift:hover { transform: none; }
+  .admin-shell .admin-skeleton { animation: none; }
+}

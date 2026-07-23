@@ -1,0 +1,15 @@
+@import "../admin-kit/styles/admin-theme.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background: theme("colors.admin.surface-subdued");
+  color: theme("colors.admin.text");
+  -webkit-font-smoothing: antialiased;
+}
