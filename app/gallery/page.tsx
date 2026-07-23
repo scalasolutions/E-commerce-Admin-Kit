@@ -42,7 +42,7 @@ import { TableEmptyRow } from "@/components/admin/admin-table-states";
 
 import { StorageProvider, createInMemoryStorageAdapter } from "@/lib/adapters/storage";
 import { useRowSelection } from "@/lib/hooks/use-row-selection";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice } from "@/app/format";
 
 const DEMO_ROWS = [
   { id: "r1", name: "Olive Oil 500ml", price: 189000, status: "active" },

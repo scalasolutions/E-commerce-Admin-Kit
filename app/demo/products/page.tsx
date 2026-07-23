@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { usePagination } from "@/lib/hooks/use-pagination";
 import { useRowSelection } from "@/lib/hooks/use-row-selection";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice } from "@/app/format";
 import { demoProducts, type DemoProduct } from "../demo-data";
 
 const COL_COUNT = 7;

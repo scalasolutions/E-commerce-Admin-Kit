@@ -4,7 +4,8 @@ import * as React from "react";
 import { Printer, MapPin, ScanLine } from "lucide-react";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
-import { cn, formatPrice } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { formatPrice } from "@/app/format";
 import {
   courierLabel,
   billableWeightKg,

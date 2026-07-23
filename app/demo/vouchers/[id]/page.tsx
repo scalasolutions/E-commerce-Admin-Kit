@@ -13,7 +13,8 @@ import { Switch } from "@/components/ui/switch";
 import { Segmented } from "@/components/ui/segmented";
 import { MoneyInput } from "@/components/ui/money-input";
 import { fireConfetti } from "@/components/ui/confetti";
-import { cn, formatPrice } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { formatPrice } from "@/app/format";
 import {
   BLANK_VOUCHER,
   findVoucher,

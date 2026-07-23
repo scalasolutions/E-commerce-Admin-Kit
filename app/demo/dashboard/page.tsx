@@ -5,7 +5,7 @@ import AdminPageHeader from "@/components/admin/admin-page-header";
 import AdminStatCard from "@/components/admin/admin-stat-card";
 import AdminSectionCard from "@/components/admin/admin-section-card";
 import AdminAreaChart from "@/components/admin/admin-area-chart";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice } from "@/app/format";
 
 const revenue = [
   { label: "Mon", value: 4200000 },

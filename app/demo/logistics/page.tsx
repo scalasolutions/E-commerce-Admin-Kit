@@ -25,7 +25,8 @@ import { Button } from "@/components/ui/button";
 import { Segmented } from "@/components/ui/segmented";
 import { usePagination } from "@/lib/hooks/use-pagination";
 import { useRowSelection } from "@/lib/hooks/use-row-selection";
-import { cn, formatDateOnly } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { formatDateOnly } from "@/app/format";
 import BookingModal, { type BookingResult } from "./booking-modal";
 import LabelPreviewModal from "./label-preview";
 import {

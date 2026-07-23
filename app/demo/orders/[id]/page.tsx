@@ -22,7 +22,7 @@ import { Select } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { fireConfetti } from "@/components/ui/confetti";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice } from "@/app/format";
 import {
   findOrder,
   paymentMethodLabel,

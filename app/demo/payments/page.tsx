@@ -25,7 +25,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
 import { usePagination } from "@/lib/hooks/use-pagination";
-import { formatPrice, formatDate } from "@/lib/utils";
+import { formatPrice, formatDate } from "@/app/format";
 import {
   demoPayments,
   demoWebhookEvents,

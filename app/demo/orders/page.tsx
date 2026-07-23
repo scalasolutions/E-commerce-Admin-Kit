@@ -13,7 +13,7 @@ import { TableEmptyRow } from "@/components/admin/admin-table-states";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select } from "@/components/ui/select";
 import { usePagination } from "@/lib/hooks/use-pagination";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice } from "@/app/format";
 import {
   demoOrders,
   paymentMethodLabel,

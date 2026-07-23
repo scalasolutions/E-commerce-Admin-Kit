@@ -13,7 +13,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Select } from "@/components/ui/select";
 import { usePagination } from "@/lib/hooks/use-pagination";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice } from "@/app/format";
 import { demoVouchers, regionLabel, type DemoVoucher } from "./vouchers-data";
 
 function discountLabel(v: DemoVoucher) {
