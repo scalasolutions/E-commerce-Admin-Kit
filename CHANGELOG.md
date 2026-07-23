@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+### Reusable table patterns (extracted from Francis's list pages, not the pages themselves)
+- `useRowSelection` hook — select-all-on-page, toggle, indeterminate, clear.
+- `Checkbox` now supports `indeterminate` (dash state) for select-all headers.
+- `AdminBulkBar` — sticky bulk-action bar shown when rows are selected.
+- `AdminFilterBar` — search + filters toolbar layout above a table.
+- `TableLoadingRow` / `TableEmptyRow` — the standard in-table states.
+- `ConfirmDialog` — a typed, async-aware `window.confirm` replacement on the kit Modal.
+- The `/demo` products page now wires all of the above end to end as a copyable recipe.
+
 ## 0.1.0 — Initial extraction
 
 First cut of the reusable kit, extracted from the Francis Organic admin and

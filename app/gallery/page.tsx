@@ -22,6 +22,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Modal } from "@/components/ui/modal";
 import { MoneyInput } from "@/components/ui/money-input";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 import AdminStatCard from "@/components/admin/admin-stat-card";
@@ -35,9 +36,19 @@ import AdminAreaChart from "@/components/admin/admin-area-chart";
 import AdminImageUpload from "@/components/admin/admin-image-upload";
 import AdminGalleryUpload from "@/components/admin/admin-gallery-upload";
 import AdminStorageUsage from "@/components/admin/admin-storage-usage";
+import AdminFilterBar from "@/components/admin/admin-filter-bar";
+import AdminBulkBar from "@/components/admin/admin-bulk-bar";
+import { TableEmptyRow } from "@/components/admin/admin-table-states";
 
 import { StorageProvider, createInMemoryStorageAdapter } from "@/lib/adapters/storage";
+import { useRowSelection } from "@/lib/hooks/use-row-selection";
 import { formatPrice } from "@/lib/utils";
+
+const DEMO_ROWS = [
+  { id: "r1", name: "Olive Oil 500ml", price: 189000, status: "active" },
+  { id: "r2", name: "Wildflower Honey", price: 95000, status: "draft" },
+  { id: "r3", name: "Pink Salt Grinder", price: 68000, status: "active" },
+];
 
 function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
   return (
@@ -62,6 +73,8 @@ export default function GalleryPage() {
   const [search, setSearch] = React.useState("");
   const [cover, setCover] = React.useState("");
   const [gallery, setGallery] = React.useState<string[]>([]);
+  const [confirmOpen, setConfirmOpen] = React.useState(false);
+  const selection = useRowSelection(DEMO_ROWS.map((r) => r.id));
 
   return (
     <StorageProvider adapter={storage}>
@@ -195,28 +208,72 @@ export default function GalleryPage() {
               />
             </Section>
 
-            <Section id="table" title="Table">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Product</TableHead>
-                    <TableHead className="text-right">Price</TableHead>
-                    <TableHead>Status</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
-                    <TableCell className="font-medium">Olive Oil 500ml</TableCell>
-                    <TableCell className="text-right tabular-nums">{formatPrice(189000)}</TableCell>
-                    <TableCell><AdminStatusBadge status="active" /></TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="font-medium">Wildflower Honey</TableCell>
-                    <TableCell className="text-right tabular-nums">{formatPrice(95000)}</TableCell>
-                    <TableCell><AdminStatusBadge status="draft" /></TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
+            <Section id="table" title="Table — bulk select, filter bar, states">
+              <div className="space-y-4">
+                <AdminFilterBar
+                  search={<AdminSearchInput value={search} onChange={setSearch} placeholder="Search…" />}
+                >
+                  <Select className="h-9 w-40 text-xs" defaultValue="">
+                    <option value="">All statuses</option>
+                    <option value="active">Active</option>
+                    <option value="draft">Draft</option>
+                  </Select>
+                </AdminFilterBar>
+
+                <div className="rounded-xl border border-admin-border bg-admin-surface shadow-admin overflow-hidden">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="w-10">
+                          <Checkbox
+                            checked={selection.allSelected}
+                            indeterminate={selection.someSelected}
+                            onCheckedChange={selection.toggleAll}
+                            aria-label="Select all"
+                          />
+                        </TableHead>
+                        <TableHead>Product</TableHead>
+                        <TableHead className="text-right">Price</TableHead>
+                        <TableHead>Status</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {DEMO_ROWS.length === 0 ? (
+                        <TableEmptyRow colSpan={4} message="No products found." />
+                      ) : (
+                        DEMO_ROWS.map((r) => (
+                          <TableRow key={r.id}>
+                            <TableCell className="w-10">
+                              <Checkbox
+                                checked={selection.isSelected(r.id)}
+                                onCheckedChange={() => selection.toggle(r.id)}
+                                aria-label={`Select ${r.name}`}
+                              />
+                            </TableCell>
+                            <TableCell className="font-medium">{r.name}</TableCell>
+                            <TableCell className="text-right tabular-nums">{formatPrice(r.price)}</TableCell>
+                            <TableCell>
+                              <AdminStatusBadge status={r.status} />
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      )}
+                    </TableBody>
+                  </Table>
+                </div>
+
+                <AdminBulkBar count={selection.count} onClear={selection.clear}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-9 gap-1.5 text-admin-critical-text"
+                    onClick={() => setConfirmOpen(true)}
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                    Delete
+                  </Button>
+                </AdminBulkBar>
+              </div>
             </Section>
 
             <Section id="cards" title="Section card">
@@ -259,6 +316,9 @@ export default function GalleryPage() {
             <Section id="overlays" title="Overlays & menus">
               <Row>
                 <Button onClick={() => setModalOpen(true)}>Open modal</Button>
+                <Button variant="danger" onClick={() => setConfirmOpen(true)}>
+                  Confirm dialog
+                </Button>
                 <AdminQuickActions
                   actions={[
                     { label: "Add product", href: "/demo/products/new", icon: Plus },
@@ -280,6 +340,17 @@ export default function GalleryPage() {
                   </Button>
                 </div>
               </Modal>
+              <ConfirmDialog
+                open={confirmOpen}
+                onClose={() => setConfirmOpen(false)}
+                onConfirm={async () => {
+                  await new Promise((r) => setTimeout(r, 600));
+                  selection.clear();
+                }}
+                title="Delete selected?"
+                description="This can’t be undone. Async confirm — the button spins until it resolves."
+                confirmLabel="Delete"
+              />
             </Section>
           </div>
         </div>

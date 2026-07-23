@@ -10,22 +10,22 @@
     "lint": "next lint",
     "sync": "node scripts/sync.mjs"
   },
+  "//peerNote": "tiptap + canvas-confetti are needed only by admin-rich-text / confetti. The showcase app uses them so they are listed here; a consumer that skips those components can drop them.",
   "dependencies": {
+    "@tiptap/core": "^3.27.4",
+    "@tiptap/pm": "^3.27.4",
+    "@tiptap/react": "^3.27.4",
+    "@tiptap/starter-kit": "^3.27.4",
+    "@tiptap/extension-image": "^3.27.4",
+    "@tiptap/extension-link": "^3.27.4",
+    "@tiptap/extension-placeholder": "^3.27.4",
+    "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
     "lucide-react": "^0.454.0",
     "next": "14.2.35",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^3.6.0"
-  },
-  "optionalDependencies": {
-    "@tiptap/extension-image": "^3.27.4",
-    "@tiptap/extension-link": "^3.27.4",
-    "@tiptap/extension-placeholder": "^3.27.4",
-    "@tiptap/pm": "^3.27.4",
-    "@tiptap/react": "^3.27.4",
-    "@tiptap/starter-kit": "^3.27.4",
-    "canvas-confetti": "^1.9.4"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.20",

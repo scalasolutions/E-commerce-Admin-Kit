@@ -23,7 +23,8 @@ admin-kit/
   config/admin-kit.config.example.tsx → per-client brand + nav + RBAC + storage (copy & edit)
   components/ui/*                  → primitives (pure; only use admin-* tokens + cn)
                                      button, card, table, badge, input, select,
-                                     textarea, checkbox, switch, modal, label,
+                                     textarea, checkbox (with indeterminate),
+                                     switch, modal, confirm-dialog, label,
                                      money-input, confetti
   components/admin/*               → building blocks + the generic shell
       admin-context.tsx           → <AdminProvider> + useAdminKit() + nav types
@@ -35,15 +36,23 @@ admin-kit/
       admin-action-bar, admin-form-section, admin-pagination, admin-search-input,
       admin-quick-actions, admin-area-chart, admin-date-range, admin-time-range,
       auto-shrink-text
+      admin-filter-bar             → search + filters toolbar above a table
+      admin-bulk-bar               → sticky bulk-action bar (pairs with useRowSelection)
+      admin-table-states           → <TableLoadingRow> / <TableEmptyRow>
       admin-image-upload, admin-gallery-upload, admin-media-upload,
       admin-storage-usage, admin-rich-text   ← need a StorageAdapter
   lib/adapters/storage.tsx        → StorageAdapter interface + <StorageProvider> + in-memory impl
   lib/constants/status.ts         → status → tint/label vocabulary (badge + inline select)
   lib/media.ts                    → isVideoUrl / formatBytes
   lib/hooks/use-pagination.ts     → client-side pagination hook
+  lib/hooks/use-row-selection.ts  → table multi-select (select-all, toggle, indeterminate, clear)
   lib/utils.ts                    → cn() + formatPrice/formatThousands/formatDate + day helpers
                                      (LOCALE / CURRENCY / TIMEZONE are the per-client knobs)
 ```
+
+The list-page recipe (bulk select + filter + confirm + pagination) is wired end
+to end in the showcase at `app/demo/products/page.tsx` — copy it as a starting
+point for any table page.
 
 ## Backend seams
 

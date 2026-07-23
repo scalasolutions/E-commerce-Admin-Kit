@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Check } from "lucide-react";
+import { Check, Minus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface CheckboxProps
@@ -12,17 +12,28 @@ export interface CheckboxProps
   onCheckedChange?: (checked: boolean) => void;
   /** Native onChange is still supported and called alongside onCheckedChange. */
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  /** Partial state — shows a dash instead of a check (e.g. select-all when only some rows are picked). */
+  indeterminate?: boolean;
   /** Extra classes applied to the outer wrapper (when a label is present). */
   wrapperClassName?: string;
 }
 
 export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
   (
-    { className, wrapperClassName, label, checked, disabled, onChange, onCheckedChange, id, ...props },
+    { className, wrapperClassName, label, checked, disabled, onChange, onCheckedChange, indeterminate, id, ...props },
     ref
   ) => {
     const reactId = React.useId();
     const inputId = id ?? reactId;
+
+    // `indeterminate` is a DOM property, not an attribute — set it imperatively.
+    // Merge our own ref with any forwarded ref so both keep working.
+    const innerRef = React.useRef<HTMLInputElement>(null);
+    React.useImperativeHandle(ref, () => innerRef.current as HTMLInputElement);
+    const showDash = Boolean(indeterminate) && !checked;
+    React.useEffect(() => {
+      if (innerRef.current) innerRef.current.indeterminate = showDash;
+    }, [showDash]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       onChange?.(e);
@@ -36,7 +47,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
             (e.g. table select-all / per-row). sr-only would leave the visible
             box inert because nothing forwards the click to the input. */}
         <input
-          ref={ref}
+          ref={innerRef}
           id={inputId}
           type="checkbox"
           checked={checked}
@@ -45,7 +56,9 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
           className="peer absolute inset-0 z-10 m-0 h-full w-full cursor-pointer opacity-0 disabled:cursor-not-allowed"
           {...props}
         />
-        {/* Visual box — peer sibling of the input so state is CSS-driven. */}
+        {/* Visual box — peer sibling of the input so checked state is CSS-driven.
+            The indeterminate fill is applied directly (a JS-set DOM property has
+            no CSS pseudo-class to key off). */}
         <span
           aria-hidden="true"
           className={cn(
@@ -55,6 +68,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
             "peer-checked:border-admin-accent peer-checked:bg-admin-accent",
             "peer-focus-visible:ring-2 peer-focus-visible:ring-admin-accent/30",
             "peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
+            showDash && "border-admin-accent bg-admin-accent",
             className
           )}
         />
@@ -64,6 +78,10 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
           strokeWidth={3}
           className="pointer-events-none absolute h-3 w-3 text-white opacity-0 transition-opacity duration-150 peer-checked:opacity-100"
         />
+        {/* Dash for the indeterminate (partial) state. */}
+        {showDash && (
+          <Minus aria-hidden="true" strokeWidth={3} className="pointer-events-none absolute h-3 w-3 text-white" />
+        )}
       </span>
     );
 
